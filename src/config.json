@@ -14,7 +14,19 @@
         },
         "explorerURL" : "#"
     },
-    "42" : {
-        "explorerURL" : "https://etherscan.io/"
-    }
+    "11155111": {
+        "exchange": {
+          "address": "<Sepolia Exchange Contract Address>"
+        },
+        "DApp": {
+          "address": "<Sepolia DApp Contract Address>"
+        },
+        "mETH": {
+          "address": "<Sepolia mETH Contract Address>"
+        },
+        "mDAI": {
+          "address": "<Sepolia mDAI Contract Address>"
+        },
+        "explorerURL": "https://sepolia.etherscan.io/"
+    }    
 }
