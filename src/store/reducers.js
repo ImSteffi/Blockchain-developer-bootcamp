@@ -73,6 +73,29 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
             ...state, 
             contract: action.exchange
         }
+        case 'CANCELLED_ORDERS_LOADED': return {
+                ...state,
+                cancelledOrders: {
+                    loaded: true,
+                    data: action.cancelledOrders
+                }
+            }
+        case 'FILLED_ORDERS_LOADED' : return {
+            ...state,
+            filledOrders: {
+                loaded: true,
+                data: action.filledOrders
+            }
+        }
+        // orders loaded (cancelled, filled & all)
+        case 'ALL_ORDERS_LOADED' : return {
+            ...state,
+            allOrders: {
+                loaded: true,
+                data: action.allOrders
+            }
+        }
+        // balance cases
         case 'EXCHANGE_TOKEN_1_BALANCE_LOADED' : return {
             ...state, 
             balances: [action.balance]
@@ -81,6 +104,7 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
             ...state, 
             balances: [...state.balances, action.balance]
         }
+        // transfer cases (deposit & withdraws)
         case 'TRANSFER_REQUEST' : return {
             ...state, 
             transaction: {transactionType: 'Transfer', isPending: true, isSuccessful: false},
@@ -97,6 +121,7 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
             transaction: {transactionType: 'Transfer', isPending: false, isSuccessful: false, isError: true},
             transferInProgress: false,
         }
+        // making orders cases
         case 'NEW_ORDER_REQUEST' : return {
             ...state, 
             transaction: {transactionType: 'New Order', isPending: true, isSuccessful: false},
@@ -106,7 +131,8 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
             transaction: {transactionType: 'New Order', isPending: false, isSuccessful: false, isError: true},
         }
         case 'NEW_ORDER_SUCCESS' :
-            index = state.allOrders.data.findIndex(order => order.id == action.orderId)
+            // prevent duplicate orders
+            index = state.allOrders.data.findIndex(order => order.id.toString() == action.order.id.toString())
             if(index === -1) {
                 data = [...state.allOrders.data, action.order]
             } else {
