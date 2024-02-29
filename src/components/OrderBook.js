@@ -17,7 +17,7 @@ const OrderBook = () => {
         </div>
   
         <div className="flex">
-          {!orderBook || orderBook.sellOrders.lenght === 0 ? (
+          {!orderBook || orderBook.sellOrders.length === 0 ? (
             <p className="flex-center">No Sell Orders</p>
           ) : (
             <table className='exchange__orderbook--sell'>
@@ -45,7 +45,7 @@ const OrderBook = () => {
   
           <div className='divider'></div>
   
-          {!orderBook || orderBook.buyOrders.lenght === 0 ? (
+          {!orderBook || orderBook.buyOrders.length === 0 ? (
             <p className='flex-center'>No Buy Orders</p>
           ) : (
             <table className='exchange__orderbook--buy'>
