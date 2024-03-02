@@ -71,7 +71,7 @@ const Balance = () => {
         if(exchange && tokens[0] && tokens[1] && account) {
             loadBalances(exchange, tokens, account, dispatch)
         }
-    }, [exchange, tokens, account, transferInProgress])
+    }, [exchange, tokens, account, transferInProgress, dispatch])
 
     return (
       <div className='component exchange__transfers'>
@@ -82,8 +82,6 @@ const Balance = () => {
             <button onClick={tabHandler} ref={withdrawRef} className='tab'>Withdraw</button>
           </div>
         </div>
-  
-        {/* Deposit/Withdraw Component 1 (DApp) */}
   
         <div className='exchange__transfers--form'>
           <div className='flex-between'>
@@ -113,8 +111,6 @@ const Balance = () => {
   
         <hr />
   
-        {/* Deposit/Withdraw Component 2 (mETH) */}
-  
         <div className='exchange__transfers--form'>
           <div className='flex-between'>
             <p><small>Token</small><br /><img src={eth} alt="Token Logo" />{symbols && symbols[1]}</p>
@@ -123,7 +119,7 @@ const Balance = () => {
           </div>
 
           <form onSubmit={isDeposit ? (e) => depositHandler(e, tokens[1]) : (e) => withdrawHandler(e, tokens[1])}>
-            <label htmlFor="token1"></label>
+            <label htmlFor="token1">{symbols && symbols[1]} Amount</label>
             <input
               type="text"
               id='token1'
