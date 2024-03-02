@@ -1,5 +1,3 @@
-import { TransactionTypes } from "ethers/lib/utils"
-
 export const provider = (state = {}, action) => {
     switch (action.type) {
         case 'PROVIDER_LOADED' : return {
@@ -60,6 +58,12 @@ const DEFAULT_EXCHANGE_STATE = {
     transaction: { isSuccessful: false},
     allOrders: {
         loaded: false,
+        data: []
+    },
+    cancelledOrders: {
+        data: []
+    },
+    filledOrders: {
         data: []
     },
     events: [] 
@@ -129,6 +133,45 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
                 isError: true
             }
         }
+        // filling orders
+        case 'ORDER_FILL_REQUEST' : return {
+            ...state,
+            transaction: {
+                transactionType: 'Fill Order',
+                isPending: true,
+                isSuccessful: false
+            }
+        }
+        case 'ORDER_FILL_SUCCESS' :
+            // prevent duplicate orders
+            index = state.filledOrders.data.findIndex(order => order.id.toString() === action.order.id.toString())
+            if(index === -1) {
+                data = [...state.filledOrders.data, action.order]
+            } else {
+                data = state.filledOrders.data
+            }
+            return {
+                ...state,
+                transaction: {
+                    transactionType: 'Fill Order',
+                    isPending: false,
+                    isSuccessful: true
+                },
+                filledOrders: {
+                    ...state.filledOrders,
+                    data
+                },
+                events: [action.event,...state.events]
+            }
+        case 'ORDER_FILL_FAIL' : return {
+            ...state,
+            transaction: {
+                transactionType: 'Fill Order',
+                isPending: false,
+                isSuccessful: false,
+                isError: true
+            }
+        }
         // balance cases
         case 'EXCHANGE_TOKEN_1_BALANCE_LOADED' : return {
             ...state, 
@@ -166,7 +209,7 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
         }
         case 'NEW_ORDER_SUCCESS' :
             // prevent duplicate orders
-            index = state.allOrders.data.findIndex(order => order.id.toString() == action.order.id.toString())
+            index = state.allOrders.data.findIndex(order => order.id.toString() === action.order.id.toString())
             if(index === -1) {
                 data = [...state.allOrders.data, action.order]
             } else {
