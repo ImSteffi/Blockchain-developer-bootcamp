@@ -15,18 +15,18 @@
         "explorerURL" : "#"
     },
     "11155111": {
-        "exchange": {
-          "address": "<Sepolia Exchange Contract Address>"
-        },
-        "DApp": {
-          "address": "<Sepolia DApp Contract Address>"
-        },
-        "mETH": {
-          "address": "<Sepolia mETH Contract Address>"
-        },
-        "mDAI": {
-          "address": "<Sepolia mDAI Contract Address>"
-        },
+      "exchange" : {
+        "address" : "0x39F8D303116DE1893C9C4537EFee835A62227EEa"
+      },
+      "DApp" : {
+          "address" : "0x4AA41FD12412CC33D0A8E4BB9A0D0dEB5da82874"
+      },
+      "mETH" : {
+          "address" : "0xaDd4Cc7b2D2960fBc645105607B8B1375eFFd88D"
+      },
+      "mDAI" : {
+          "address" : "0x0e34d7FF4bBD67968D1d244Bf2a8b362D67FadeF"
+      },
         "explorerURL": "https://sepolia.etherscan.io/"
-    }    
+    }
 }
